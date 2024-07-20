@@ -28,8 +28,7 @@ th {
     margin-top: 23px;  
     margin-bottom: 23px; 
     margin-left: 53px; 
-    height: 44px;
-    width: 581px;
+    padding: 12px 458px 13px 16px;
 }
 
 .header_input ::placeholder {
@@ -57,8 +56,7 @@ th {
 
 .add_client_button {
     border: 1px solid #9873FF;
-    width: 216px;
-    height: 44px;
+    padding: 12.5px 26.5px 12.5px 26.5px;
     display: inline-flex;
     align-items: center;
     flex-direction: row-reverse;
@@ -66,6 +64,8 @@ th {
     margin: auto;
     margin-top: 40px;
     color: #9873FF;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .client_img {
@@ -76,6 +76,7 @@ th {
 
 .close_modal_button {
     background-color: transparent;
+    border: 0px;
 }
 
 .close_img {
@@ -84,7 +85,8 @@ th {
 }
 
 .client_creation_modal {
-    display: none; 
+  display: none;
+  justify-content: center; 
   position: fixed; 
   z-index: 1; 
   left: 0;
@@ -97,12 +99,79 @@ th {
 }
 
 .creation_modal_content_container {
-    margin-left: 30px;
+    display: flex;
+    background-color: #fff;
+    margin-top: 150px;
+    flex-direction: column;
+    width: 450px;
+    height: 400px;
 }
 
 .addContact_img {
     width: 16px;
     height: 16px;
+    margin-right: 4px;
 }
+
+.creation-modal_head {
+    display: inline-flex;
+    justify-content: space-between;
+    margin-left: 30px;
+}
+
+.newClient_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.newClient_form_input {
+    width: 390px;
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    border-color: #C8C5D1;
+    color: #B0B0B0;
+    font-size: 14px;
+    outline: none;
+}
+
+.name_input {
+    margin: 32px 0 32px 0;
+}
+
+.addContact_button {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    margin: 25px 0 25px 0;
+    flex-direction: row-reverse;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px;
+    border: 0px;
+    outline: none;
+}
+
+.saveNewClient_button {
+    padding: 12.5px 35px 12.5px 35px;
+    background-color: #9873FF;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.cancel-new-client-infromation_button {
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+    outline: none;
+}
+
+
 
 
