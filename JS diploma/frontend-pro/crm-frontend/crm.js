@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function() {
+  const clientsArray = await getClients();
   const header = document.createElement("div");
   header.classList.add("header");
   const headerSearchInput = document.createElement("input");
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", async function() {
   const clientsTable = document.createElement("table");
   clientsTable.classList.add('clientsTable')
   const clientsTableHead = document.createElement("thead"); // голова таблицы
+  clientsTableHead.classList.add('clientsTable_head')
   const headRow = document.createElement("tr");
   headRow.classList.add("head_row");
   const clientIdCol = document.createElement("th");
@@ -30,19 +32,48 @@ document.addEventListener("DOMContentLoaded", async function() {
   clientChangeActionsCol.innerHTML = "Действия";
   const clientsTableBody = document.createElement("tbody"); // тело таблицы
 
-  function addClient() {
+
+  const addClientButton = document.createElement("button");
+  addClientButton.classList.add("add_client_button");
+  const addClientImg = document.createElement("img");
+  addClientImg.classList.add("client_img");
+  addClientImg.src = "img/addClient.png";
+  addClientButton.textContent = "Добавить клиента";
+
+
+  header.append(logo, headerSearchInput);
+  headRow.append(clientIdCol,
+    clientFullnameCol,
+    clientTimeCreationCol,
+    clientContactsCol,
+    clientChangeActionsCol)
+    clientsTableHead.append(
+      headRow
+    );
+  clientsTable.append(clientsTableHead, clientsTableBody);
+  addClientButton.append(addClientImg);
+  container.append(clientsHeadline, clientsTable, addClientButton);
+  document.body.append(header, container);
+
+  function addClient(clientObj) {
     const clientInformationRow = document.createElement("tr");
+    clientInformationRow.classList.add('client_row')
     const clientIdCell = document.createElement("td");
+    clientIdCell.classList.add('client_cell')
     const clientFullNameCell = document.createElement("td");
+    clientFullNameCell.classList.add('client_cell')
     const clientCreationTimeCell = document.createElement("td");
+    clientCreationTimeCell.classList.add('client_cell')
     const clientContactsCell = document.createElement("td");
+    clientContactsCell.classList.add('client_cell')
     const clientActionsCell = document.createElement("td");
+    clientActionsCell.classList.add('client_cell')
     
 
-    clientIdCell.textContent = '1'
-    clientFullNameCell.textContent = 'Надеин Данил Валерьевич'
-    clientCreationTimeCell.textContent = '17.07.2024'
-    clientContactsCell.textContent = 'VK'
+    clientIdCell.textContent = clientObj.id
+    clientFullNameCell.textContent = `${clientObj.surname} ${clientObj.name} ${clientObj.lastname}`.trim()
+    // clientCreationTimeCell.textContent = '17.07.2024'
+    // clientContactsCell.textContent = 'VK'
     clientActionsCell.textContent = 'Удалить'
 
 
@@ -57,12 +88,38 @@ document.addEventListener("DOMContentLoaded", async function() {
     clientsTableBody.append(clientInformationRow);
   }
 
-  const addClientButton = document.createElement("button");
-  addClientButton.classList.add("add_client_button");
-  const addClientImg = document.createElement("img");
-  addClientImg.classList.add("client_img");
-  addClientImg.src = "img/addClient.png";
-  addClientButton.textContent = "Добавить клиента";
+  
+
+
+  async function clientPost(obj) {
+    try {
+      const response = await fetch("http://localhost:3000/api/clients", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(obj)
+      });
+      const result = await response.json();
+      return result;
+    } catch {}
+  }
+
+  async function getClients() {
+    try {
+      const response = await fetch("http://localhost:3000/api/clients");
+      const data = await response.json();
+      return data;
+    } catch {}
+
+  }
+
+  // function createClientsTable(arr) {
+  //   for(const newClient of arr) {
+  //     addClient(newClient)
+  //   }
+  // }
+  
+  // createClientsTable(clientsArray)  
+
 
   function createClientCreationModal() {
     const clientCreationModal = document.createElement("div");
@@ -138,20 +195,30 @@ document.addEventListener("DOMContentLoaded", async function() {
         clientCreationModal.style.display = "none";
       }
     };
+
+    addNewClientForm.addEventListener('submit', function(event) {
+    event.preventDefault()
+    const client = {
+      name: nameInput.value,
+      surname: surnameInput.value,
+      lastname: lastNameInput.value,
+      // contacts: [{vk: '11'}, {facebook: '22'}, {mail: '22'}],
+    }
+    const createClient = async () => {
+      await clientPost(client);
+      clientsArray.push(client);
+      addClient(client);
+      clientCreationModal.style.display = "none";
+    };
+    createClient();
+
+    })
+    
   }
   createClientCreationModal();
 
-  header.append(logo, headerSearchInput);
-  clientsTableHead.append(
-    clientIdCol,
-    clientFullnameCol,
-    clientTimeCreationCol,
-    clientContactsCol,
-    clientChangeActionsCol
-  );
-  clientsTable.append(clientsTableHead, clientsTableBody);
-  addClientButton.append(addClientImg);
-  container.append(clientsHeadline, clientsTable, addClientButton);
-  addClient()
-  document.body.append(header, container);
+ 
+
+  
+
 });
