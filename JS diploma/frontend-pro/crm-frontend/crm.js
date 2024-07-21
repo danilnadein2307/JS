@@ -71,8 +71,8 @@ document.addEventListener("DOMContentLoaded", async function() {
     
 
     clientIdCell.textContent = clientObj.id
-    clientFullNameCell.textContent = `${clientObj.surname} ${clientObj.name} ${clientObj.lastname}`.trim()
-    // clientCreationTimeCell.textContent = '17.07.2024'
+    clientFullNameCell.textContent = `${clientObj.surname} ${clientObj.name} ${clientObj.lastName}`.trim()
+    clientCreationTimeCell.textContent = clientObj.createdAt
     // clientContactsCell.textContent = 'VK'
     clientActionsCell.textContent = 'Удалить'
 
@@ -112,13 +112,13 @@ document.addEventListener("DOMContentLoaded", async function() {
 
   }
 
-  // function createClientsTable(arr) {
-  //   for(const newClient of arr) {
-  //     addClient(newClient)
-  //   }
-  // }
+  function createClientsTable(arr) {
+    for(const newClient of arr) {
+      addClient(newClient)
+    }
+  }
   
-  // createClientsTable(clientsArray)  
+  createClientsTable(clientsArray)  
 
 
   function createClientCreationModal() {
@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     const client = {
       name: nameInput.value,
       surname: surnameInput.value,
-      lastname: lastNameInput.value,
+      lastName: lastNameInput.value,
       // contacts: [{vk: '11'}, {facebook: '22'}, {mail: '22'}],
     }
     const createClient = async () => {
@@ -211,6 +211,7 @@ document.addEventListener("DOMContentLoaded", async function() {
       clientCreationModal.style.display = "none";
     };
     createClient();
+    console.log(clientsArray)
 
     })
     
