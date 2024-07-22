@@ -68,16 +68,38 @@ document.addEventListener("DOMContentLoaded", async function() {
     clientContactsCell.classList.add('client_cell')
     const clientActionsCell = document.createElement("td");
     clientActionsCell.classList.add('client_cell')
+    const clientActionsButtonGroup = document.createElement('div')
+    const clientDeleteButton = document.createElement('button')
+    clientDeleteButton.textContent = 'Удалить'
+    clientDeleteButton.classList.add('clientAction_button')
+    const clientDeleteImg = document.createElement('img')
+    clientDeleteImg.classList.add('clientDelete_img')
+    clientDeleteImg.src = 'img/cancel.png'
+    const clientEditButton = document.createElement('button')
+    clientEditButton.textContent = 'Изменить'
+    clientEditButton.classList.add('clientAction_button')
+    const clientEditImg = document.createElement('img')
+    clientEditImg.src = 'img/edit.png'
+    clientEditImg.classList.add('clientEdit_img')
     
 
     clientIdCell.textContent = clientObj.id
     clientFullNameCell.textContent = `${clientObj.surname} ${clientObj.name} ${clientObj.lastName}`.trim()
     clientCreationTimeCell.textContent = clientObj.createdAt
+    clientDeleteButton.addEventListener('click' , function(){
+      clientDelete(clientObj.id)
+      clientInformationRow.remove()
+    })
     // clientContactsCell.textContent = 'VK'
-    clientActionsCell.textContent = 'Удалить'
 
 
 
+
+
+    clientEditButton.append(clientEditImg)
+    clientDeleteButton.append(clientDeleteImg)
+    clientActionsButtonGroup.append(clientEditButton, clientDeleteButton)
+    clientActionsCell.append(clientActionsButtonGroup)
     clientInformationRow.append(
       clientIdCell,
       clientFullNameCell,
@@ -110,6 +132,12 @@ document.addEventListener("DOMContentLoaded", async function() {
       return data;
     } catch {}
 
+  }
+
+  async function clientDelete(id) {
+    await fetch(`http://localhost:3000/api/clients/${id}`, {
+      method: "DELETE"
+    });
   }
 
   function createClientsTable(arr) {
@@ -205,9 +233,9 @@ document.addEventListener("DOMContentLoaded", async function() {
       // contacts: [{vk: '11'}, {facebook: '22'}, {mail: '22'}],
     }
     const createClient = async () => {
-      await clientPost(client);
-      clientsArray.push(client);
-      addClient(client);
+      const newClient = await clientPost(client);
+      clientsArray.push(newClient);
+      addClient(newClient);
       clientCreationModal.style.display = "none";
     };
     createClient();
