@@ -1,8 +1,14 @@
+@font-face {
+    font-family: "Open Sans";
+    src: url('Open Sans');
+}
+
 body {
     margin: 0;
     background-color: #F5F5F5;
     font-family: "Open Sans";
 }
+
 
 h1 {
     font-size: 24px;
@@ -127,6 +133,7 @@ th {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #fff;
 }
 
 .newClient_form_input {
@@ -145,17 +152,25 @@ th {
 }
 
 .addContact_button {
-    width: 100%;
     display: inline-flex;
     justify-content: center;
-    margin: 25px 0 25px 0;
     flex-direction: row-reverse;
-    color: #333;
     font-size: 14px;
     font-weight: 600;
-    padding: 8px;
     border: 0px;
     outline: none;
+    background-color: transparent;
+    margin-top: 25px;
+}
+
+.addContact_group {
+    margin: 25px 0 25px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    background-color: #F5F5F5;
+    padding-bottom: 25px;
 }
 
 .saveNewClient_button {
@@ -174,6 +189,8 @@ th {
     border: none;
     text-decoration: underline;
     outline: none;
+    font-weight: 500;
+    margin-bottom: 29px;
 }
 
 
@@ -206,6 +223,7 @@ th {
     font-size: 14px;
     flex-direction: row-reverse;
     display: inline-flex;
+    margin-right: 30px;
 }
 
 .clientDelete_img {
@@ -223,4 +241,28 @@ th {
     flex-direction: column;
 }
 
+.contactInformation_group {
+    margin-top: 25px;
+}
+
+.dropdown {
+    padding:  8px 60px 8px 12px;
+    background-color: #E7E5EB;
+    border: 1px solid #C8C5D1;
+    outline: none;
+}
+
+.contactInfo_input {
+    padding: 8px 78.85px 9px 11.63px;
+    font-size: 14px;
+    color: #B0B0B0;
+    border: 1px solid #C8C5D1;
+    outline: none;
+
+}
+
+.newClientForm_button-group {
+    display: flex;
+    flex-direction: column;
+}
 
