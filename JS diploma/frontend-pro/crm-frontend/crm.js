@@ -89,6 +89,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     });
     // clientContactsCell.textContent = 'VK'
 
+
     clientEditButton.append(clientEditImg);
     clientDeleteButton.append(clientDeleteImg);
     clientActionsButtonGroup.append(clientEditButton, clientDeleteButton);
@@ -157,12 +158,15 @@ document.addEventListener("DOMContentLoaded", async function() {
     const addNewClientForm = document.createElement("form");
     addNewClientForm.classList.add("newClient_form");
     const surnameInput = document.createElement("input");
+    surnameInput.name = "surname"
     surnameInput.placeholder = "Фамилия*";
     surnameInput.classList.add("newClient_form_input");
     const nameInput = document.createElement("input");
+    nameInput.name = "name"
     nameInput.placeholder = "Имя*";
     nameInput.classList.add("newClient_form_input", "name_input");
     const lastNameInput = document.createElement("input");
+    lastNameInput.name = "lastname"
     lastNameInput.placeholder = "Отчество";
     lastNameInput.classList.add("newClient_form_input");
     const addContactGroup = document.createElement("div");
@@ -224,10 +228,13 @@ document.addEventListener("DOMContentLoaded", async function() {
     
     function dropdownCreate() {
       const contactInformationGroup = document.createElement("div");
+      contactInformationGroup.name = "contactgroup";
       contactInformationGroup.classList.add("contactInformation_group");
       const dropdown = document.createElement("select");
       dropdown.classList.add("dropdown");
+      dropdown.name = "type"
       const contactInfoInput = document.createElement("input");
+      contactInfoInput.name = "value"
       contactInfoInput.classList.add("contactInfo_input");
       contactInfoInput.placeholder = "Введите данные контакта";
       for (let i = 0; i < dropdownOptions.length; ++i) {
@@ -238,7 +245,7 @@ document.addEventListener("DOMContentLoaded", async function() {
       }
 
       contactInformationGroup.append(dropdown, contactInfoInput);
-      addContactGroup.append(contactInformationGroup);
+      addContactGroup.prepend(contactInformationGroup);
     }
     let counter = 0;
     addContactButton.addEventListener("click", function(event) {
@@ -249,8 +256,19 @@ document.addEventListener("DOMContentLoaded", async function() {
         addContactButton.remove();
       }
     });
-    saveNewClientButton.addEventListener("click", function(event) {
+    addNewClientForm.addEventListener("submit", (event) => {
       event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+      let contactInformationGroups = addNewClientForm.querySelectorAll('#contactInformation_group');
+      
+      console.log(contactInformationGroups)
+      // const data = Object.fromEntries(formData.entries());
+      // console.log(data)
+      // const contactType = formData.get('type')
+      // console.log(contactType);
+      // formData.forEach((value, type) => {
+      //   console.log(value, type)
+      // })
       const client = {
         name: nameInput.value,
         surname: surnameInput.value,
@@ -258,7 +276,6 @@ document.addEventListener("DOMContentLoaded", async function() {
         contacts: [],
       };
       
-      console.log(client.contacts)
       const createClient = async () => {
         const newClient = await clientPost(client);
         clientsArray.push(newClient);
@@ -266,7 +283,8 @@ document.addEventListener("DOMContentLoaded", async function() {
         clientCreationModal.style.display = "none";
       };
       createClient();
-      console.log(clientsArray);
+      addNewClientForm.reset()
+      addContactGroup.remove()
     });
   }
   createClientCreationModal();
